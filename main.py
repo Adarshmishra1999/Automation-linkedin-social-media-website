@@ -1,16 +1,65 @@
-# This is a sample Python script.
+from selenium import webdriver
+import pandas as pd
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+var = webdriver.Chrome(executable_path="C:\\Users\\shivm\\PycharmProjects\\pythonProject\\pythonProject3\\chromedriver.exe")
+df = pd.read_csv("autolinkdin.csv", encoding="utf-8")
+
+myuser = df.username[0]
+mypass = df.password[0]
+mypost = df.posts[0]
+
+print(mypost)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+var.get("https://www.linkedin.com/login?")
+
+##############################################################
+
+#locate user from id#
+#user = var.find_element_by_id("username")
+#locate user bfrom by_name#
+user = var.find_element_by_name("session_key")
+user.send_keys(myuser)
+
+############################################################
+
+#locate pass from id#
+#pwd = var.find_element_by_id("password")
+#locate pass from by_name#
+pwd = var.find_element_by_name("session_password")
+pwd.send_keys(mypass)
+
+#############################################################
+
+#locate submit button from x_path#
+#log_in_button = var.find_element_by_xpath("//*[@type='submit']")
+#locate submit button by_class_name#
+log_in_button = var.find_element_by_class_name("btn__primary--large")
+log_in_button.click()
+
+##################################################################
+
+# List of user, pass, post #
+myuser = ["abc@gmail.com"]
+mypass = ["abcpass"]
+mypost = ["hello everyone,"
+          "this is a automation linkdin project using selenium and chrome web driver"]
+# dictionary of the lists #
+dict = {"username":myuser, "password":mypass, "posts":mypost}
+
+df = pd.DataFrame(dict)
+
+# saving the dataframe #
+df.to_csv("autolinkdin.csv",index=False)
+
+#######################################################################################
+
+post_button = var.find_element_by_id("ember808")
+post_button.click()
+
+#make_post = var.find_element_by_xpath('/html/body/div[3]/div/div/div[2]/div/div/div[1]/div[2]/div/div/div[2]/div/div/div[1]')
+#make_post.send_keys(mypost)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
